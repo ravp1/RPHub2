@@ -1,0 +1,39 @@
+<script>
+/*
+	$(document).ready(function(){
+		$.get("/amILoggedIn", function(data){
+			//console.log(data);
+			if (data =="no") {window.location.href = '/login.html';}
+		});
+	});
+*/
+</script>
+		
+<div id="navbar" role="navigation">
+		<a href="/" id="title">
+			RPHub
+		</a>
+		<ul id="menu">
+			<% for (var i = 0; i < categories.length; i++) {%>
+				<li>
+					<a href=""><%=categories[i].name %></a>
+					<ul>
+						<% for (var j = 0; j < categories[i].interests.length; j++) {%>
+							<li><a href="/interests/<%=categories[i].interests[j].nickname%>"><%=categories[i].interests[j].name%></a></li>
+						<% } %>
+					</ul>
+				</li>
+			<% } %>
+		</ul>
+		
+		<form style="float: left;">
+			
+			<div class="input-group">
+				<input class="form-control" id="navsearch" name="search" placeholder="Search" type="text">
+			</div>
+			
+		</form>
+		
+		<!-- <span style="float: right;" class="menu">First Last</span> -->
+		
+	</div>

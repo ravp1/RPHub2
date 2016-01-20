@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	
+	<title>RPHub - things</title>
+	
+	<%- include imports.ejs %>	
+	
+	
+</head>
+
+<body>
+	<!-- header -->
+	<%- include makeNavbar.ejs %>
+	
+	<!-- sidebar-->
+	<%- include makeSidebar.ejs %>
+	
+	
+	
+	<div id="meat"> <!-- entire body -->
+		
+		<img id="rphublogo" class="img-responsive" src="logo.svg" alt=""/>
+		
+		<div>
+			<a href="/request" id="reqbtn" class="btn btn-success">Request Something</a>
+		</div>
+		
+		<div class="posts" id="listofPosts" data-columns> <!-- listofPosts -->
+			
+			<% for(var i=posts.length-1; i>=0; i--) {%>
+			<div class="list-group-item collapse-group">
+				<fieldset>
+					<legend>
+						<%=posts[i].title%>
+						<small>- <%=posts[i].poster%> </small>
+						
+						<small style="float: right"> <%=posts[i].timeString%> </small>
+					</legend>
+					<!-- show tags-->
+					
+						<!--<p style="display:inline; padding:0 0 0 0">-->tagged with: <% for(var j=0; j<posts[i].tags.length; j++) {%> 
+						<div style="font-weight: 700; white-space:nowrap; display:inline;"><%=posts[i].tags[j]%></div><% if(j<posts[i].tags.length-1) {%>;<%}%>
+						<%}%>
+						<!--</p>-->
+					
+					<!-- show tags-->
+					
+					<!--show commitment-->
+					
+					<% if(posts[i].commitment) {%>
+						<div style="font-weight: 700; padding:0 0 0 0; margin:0"><%=posts[i].commitment %> hours <p style="display:inline; font-weight:500">per week</p></div>
+					<%}%>
+					<!--show commitment-->
+					
+					<% if(posts[i].pay[0]) {%>
+						Pay at a rate of <div style="font-weight: 700; white-space:nowrap; display:inline">$<%=posts[i].pay[1] %> per hour</div>
+					<%}%>
+
+					<% if(posts[i].credit[0]) {%>
+						<div style="font-weight: 700; padding:0 0 0 0; display:inline-block"><% if(posts[i].pay[0]) {%>or <%}%> <%=posts[i].credit[1] %> credits </div> offered
+					<%}%>
+					
+					<% if(posts[i].years.length>0) {%>
+						<p style="font-weight: 700; padding:0 0 0 0; ">Looking for <%=posts[i].years.join(", ") %></p>
+					<%}%>
+					<br>
+					
+					<p style="white-space: pre-line"> <%=posts[i].content%></p>
+					<div style="text-align:center"> <button class="btn btn-default btn-teal btn-respond" align="center"> Respond <span class="caret"></span> </button> </div>
+					
+					<form class="collapse" action="mailto:panser@rpi.edu" method="post" enctype="text/plain" >
+						<br>
+						Send a message to <b><%=posts[i].replyAddress%></b>
+						<textarea class="input-xlarge" name="message" id="message" rows="5"></textarea>
+						
+						<br>
+						
+						<div class="form-actions">
+							<button type="submit" name="submit" value="Submit" class="btn btn-primary btn-large">Submit</button>
+							<button class="btn btn-default collapse-button">Collapse</button>
+						</div>
+					</form>
+				
+				</fieldset>
+			</div>
+			<% } %>
+			
+			
+			<!-- database stuff goes here -->
+			
+		</div>
+		
+		
+		<footer>
+			RPHub © by Henry Choi and Ravi Panse. An <a href="http://rcos.rpi.edu/"> RCOS </a> Project.
+		</footer>
+		
+		
+	</div> <!-- /meat -->
+
+
+	<script>
+	$(document).ready(function(){
+		$('.collapse-group').on('click', function(c) {
+			c.preventDefault();
+			var collapse = $(this).find('.collapse');
+			collapse.show();
+		});
+		
+		$('.collapse-button').on('click', function(e) {
+			//alert('clicked');
+			e.preventDefault();
+			var collapse = $(this).closest('.collapse');
+			console.log(collapse.html())
+			collapse.hide();
+			console.log(collapse.css("display"));
+			e.stopPropagation();
+		});
+	});
+	
+	</script>
+	
+	<script src="/js/salvattore.js"></script>
+	
+	
+	
+</body>
+
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	
+	<title>RPHub - Login</title>
+
+	<%- include imports.ejs %>	
+
+</head>
+
+<body>
+	
+	<!-- header -->
+	<!-- <div id="header"></div> -->
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">RPHub</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="#about">About</a>
+					</li>
+					<li><a href="#services">Profile</a>
+					</li>
+					<li><a href="#contact">Contact</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container -->
+	</nav>
+	
+	<!-- /header -->
+	
+	<div class="container">
+
+		<div class="row"> <!-- entire body -->
+			<img class="img-responsive" src="logo.svg" alt="" style="border:none; margin:0 auto"/>
+			<div id="main" class="col-lg-6" style="margin: 0 auto; margin-left:280px"> <!-- center part -->
+				
+				
+				<br>
+				
+				<div class="well" style="margin-right: auto; margin-left:auto;">
+					
+					<!-- <div class="text-right">
+						<a class="btn btn-success">Request Something</a>
+					</div> -->
+					
+					<form id="contact-form" action="/login" method="post" class="form-horizontal">
+						<!-- <fieldset> -->
+							<legend style = "text-align:center;">Welcome to RPHub!</legend>
+							<div id="error-message" style="background-color:#F6D2D2; border-radius:5px; border-style:solid; border-width:1px; border-color: red;">
+								<h4 style="margin-left:10px; margin-top:10px;padding-top: 10px;">Incorrect Email or Password</h4>
+								<p style="margin-left:10px">One of the fields has been entered incorrectly.</p>
+								<p style="padding-bottom: 10px;margin-left:10px">For further login assistance, click "Forgot your Password?" To make a new account, click "Register."</p>
+							</div>
+							<script>
+								$(document).ready(function(){
+									var error = $('#error-message');
+									error.hide();
+									$.get('/loginError',function(loginError){
+										if (loginError==='true'){
+											error.show();
+										}
+									});
+									/*
+									$.get('/logout',function(logout){
+										if (logout==="true"){
+											error.hide();
+										}
+									});
+									*/
+									/*
+									window.onbeforeunload = setTimeout(function(){
+										$.post('/unloadError', {unload:'true'});
+									}, 4000);
+									*/
+								});
+							</script>
+							<div style="margin-left: 30px; margin-right:30px">
+								<div class="control-group" style="margin:0 auto">
+									<label class="control-label" for="email">Email</label>
+									<div class="controls">
+										<input type="text" class="form-control input-small" style="width:100%" name="email" id="email">
+									</div>
+								</div>
+								
+								<div class="control-group" style="margin-right: auto; margin-left:auto position: relative;">
+									<label class="control-label" for="password">Password</label>
+									<div class="controls">
+										<input class="form-control input-small" type="password" style="width:100%" name="password" id="password" 
+											rows="1" ></input>
+									</div>
+								</div>
+
+								<p></p> <!--add some space-->
+
+								<div class="form-actions" style="overflow:hidden;">
+									<table style="width:100%;table-layout:fixed">
+									<tr>
+									<td style="width:80%;vertical-align:top;">
+									<button type="submit" value="Submit" class="btn btn-primary btn-lg submit" style="width:90%;">Login</button>
+									<!--<h3 style = "text-align:center; margin-left:165px; display:inline; position:relative">OR</h3>-->
+									</td>
+									<td style="vertical-align:top;">
+									<div style="float:right">
+										<div style="overflow:hidden">
+											<a href="/register" class="btn btn-default btn-lg cancel" style="float:right">Register</a>
+											<br>
+										</div>
+										
+										
+										
+									</div>
+									
+									</td>
+									</tr>
+									</table>
+									<div style="margin-top:10px; float:right ">
+											<a href="#som" style="">Forgot your password?</a>
+										</div>
+								</div> 
+							</div>
+						<!-- </fieldset> -->
+					</form>
+					
+				</div>
+				
+				<div style="margin-top: -10px">
+					RPHub © by Henry Choi and Ravi Panse. An <a href="http://rcos.rpi.edu/"> RCOS </a> Project.
+				</div>
+
+			</div>
+	<!-- /.container -->
+	
+	<!-- footer -->
+	<!-- <div id="footer"></div> -->
+	
+	<!-- <div class="container">
+		<footer>
+			<div class="row">
+				<div class="col-lg-12">
+					RPHub © by Henry Choi and Ravi Panse. An <a href="http://rcos.rpi.edu/"> RCOS </a> Project.
+				</div>
+			</div>
+		</footer>
+	</div> -->
+	
+	
+	
+	
+	<!-- /footer -->
+	
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<script>
+/*
+	$(document).ready(function(){
+		$.get("/amILoggedIn", function(data){
+			//console.log(data);
+			if (data =="no") {window.location.href = '/login.html';}
+		});
+	});
+*/
+</script>
+	<div id="sidebar">
+		<h3><%=user.name.first%> <%=user.name.last%></h3>
+		<ul>
+			<li class="nav-item">
+				<a href="/" class="selected">
+					<!-- <img class="icon" src="/images/x.png"> -->
+					<span class="glyphicon glyphicon-home">
+					</span>Home
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="#favs">
+					<span class="glyphicon glyphicon-heart">
+					</span>Favorites
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="/request">
+					<span class="glyphicon glyphicon-file">
+					</span>Request Something
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="#notifs">
+					<span class="glyphicon glyphicon-asterisk">
+					</span>Notifications
+				</a>
+			</li>
+			
+		</ul>
+
+		<h3>Interests</h3>
+		<ul>
+			<% for (var i = 0; i < user.interests.length; i++) {%>
+			<li class="nav-item-fields">
+				<a href="/interests/<%=user.interests[i].nickname%>">
+					<span class="glyphicon glyphicon-arrow-right">
+					</span><%=user.interests[i].name%>
+				</a>
+			</li>
+			<% } %>
+			<!--
+			<li class="nav-item-yield">
+				<a href="#other">
+					<span class="glyphicon glyphicon-arrow-right">
+					</span>Other
+				</a>
+			</li>
+			-->
+			<li class="nav-item">
+				<a href="/addinterest" class="selected">
+					<!-- <img class="icon" src="/images/x.png"> -->
+					<span class="glyphicon glyphicon-plus">
+					</span>Add
+				</a>
+			</li>
+		</ul>
+		
+		<h3>Manage</h3>
+		<ul class="">
+			<li class="nav-item-equipment">
+				<a href="#myrequests">
+					<span class="glyphicon glyphicon-tag">
+					</span>My Requests
+				</a>
+			</li>
+			<li class="nav-item-settings">
+				<a href="#settings">
+					<span class="glyphicon glyphicon-cog">
+					</span>Settings
+				</a>
+			</li>
+			<li class="nav-item-equipment">
+				<a href="/logoff">
+					<span class="glyphicon glyphicon-off">
+					</span>Log Off
+				</a>
+			</li>
+
+		</ul>
+	</div>
