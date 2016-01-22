@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Online platform for finding student talent applied to specific problems or tasks at RPI",
   "main": "app.js",
+  "engines": {
+	"node": "0.10.28"
+  }
   "dependencies": {
     "ejs": "^1.0.0",
     "express": "^4.6.1",
