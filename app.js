@@ -22,7 +22,7 @@ mongoose.connect(uriString, function(err, res){
 	else{
 		console.log('Succeeded connected to: ' + uriString);
 	}
-};
+});
 
 
 var db = mongoose.connection;
