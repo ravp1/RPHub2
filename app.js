@@ -13,7 +13,7 @@ app.set('view engine', 'ejs');
 
 var uriString = process.env.MONGOLAB_URI 
 					 || process.env.MONGOHQ_URL 
-					 || 'mongodb://localhost/test');
+					 || 'mongodb://localhost/test';
 
 mongoose.connect(uriString, function(err, res){
 	if(err){
@@ -23,6 +23,7 @@ mongoose.connect(uriString, function(err, res){
 		console.log('Succeeded connected to: ' + uriString);
 	}
 };
+
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
