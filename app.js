@@ -11,7 +11,8 @@ var ejs = require("ejs");
 
 app.set('view engine', 'ejs');
 
-mongoose.connect(process.env.MONGOLAB_URI 
+mongoose.connect('mongodb://heroku_2cmd106b:dor1kmi554bd0prrufd3l6qi2m@ds051615.mongolab.com:51615/heroku_2cmd106b'
+					  || process.env.MONGOLAB_URI 
 					  || process.env.MONGOHQ_URL 
 					  || 'mongodb://localhost/test');
 
