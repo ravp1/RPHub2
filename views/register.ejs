@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	
+	<title>RPHub - Register</title>
+
+	<%- include imports.ejs %>
+	
+
+</head>
+
+<body>
+	
+	<!-- header -->
+	<!-- <div id="header"></div> -->
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">RPHub</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="#about">About</a>
+					</li>
+					<li><a href="#services">Profile</a>
+					</li>
+					<li><a href="#contact">Contact</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container -->
+	</nav>
+	
+	<!-- /header -->
+	
+	<div class="container">
+
+		<div class="row"> <!-- entire body -->
+			<img class="img-responsive" src="logo.svg" alt="" style="border:none; margin:0 auto"/>
+			<div id="main" class="col-lg-6" style="margin: 0 auto; margin-left:280px"> <!-- center part -->
+				
+				
+				<br>
+				
+				<div class="well" style="margin-right: auto; margin-left:auto;">
+					
+					<!-- <div class="text-right">
+						<a class="btn btn-success">Request Something</a>
+					</div> -->
+					
+					<form id="contact-form" action="/registerUser" method="post" class="form-horizontal">
+						<!-- <fieldset> -->
+							<legend style = "text-align:center;">Welcome to RPHub!</legend>
+							<div id="incomplete-message" style="background-color:#F6D2D2; border-radius:5px; border-style:solid; border-width:1px; border-color: red;">
+								<h4 style="margin-left:10px; margin-top:10px;padding-top: 10px;">Incomplete Form</h4>
+								<p style="margin-left:10px">You have left one or more fields blank. Please try again.</p>
+							</div>
+							<div id="usedEmail-message" style="background-color:#F6D2D2; border-radius:5px; border-style:solid; border-width:1px; border-color: red;">
+								<h4 style="margin-left:10px; margin-top:10px;padding-top: 10px;">Email Already in Use</h4>
+								<p style="margin-left:10px">There is already an account associated with this email. Please login or click 'Forgot password'</p>
+								<p style="margin-left:10px">To access your account, please login or click 'Forgot Password.'</p>
+							</div>
+							<script>
+								$(document).ready(function(){
+									var incomplete = $('#incomplete-message');
+									incomplete.hide();
+									var usedEmail = $('#usedEmail-message');
+									usedEmail.hide();
+									$.get('/registerError',function(registerError){
+										if (registerError==='incomplete'){
+											incomplete.show();
+										}
+										else if (registerError === 'usedEmail'){
+											usedEmail.show();
+										}
+									});
+								});
+							</script>
+							<div class="form-inline controls">
+								<!-- <div class="control-group" style="margin:0 auto"> -->
+								<div style="margin-left:40px">
+									<table style="width:100%">
+									<tr>
+									<td>
+										<label class="control-label" for="firstName">First Name</label>
+										<div class="controls">
+											<input type="text" class="form-control input-small" style="width:190px" name="firstName" id="firstName">
+										</div>
+									</div>
+									</td>
+									<td>
+									<div class="control-group" style="margin-right: auto; margin-left:auto position: relative;">
+										<label class="control-label" for="lastName">Last Name</label>
+										<div class="controls">
+											<input class="form-control input-small" type="lastName" style="width:190px" name="lastName" id="lastName" 
+												rows="1" ></input>
+										</div>
+									</div>
+									</td>
+									</tr>
+									</table>
+									
+									<div class="control-group" style="margin-right: auto; margin-left:auto position: relative;">
+										<label class="control-label" for="email">Email</label>
+										<div class="controls">
+											<input class="form-control input-small" style="width:90%" type="email" name="email" id="email" 
+												rows="1" ></input>
+										</div>
+									</div>
+									
+									<div class="control-group" style="margin-right: auto; margin-left:auto position: relative">
+										<label class="control-label" for="password">Password</label>
+										<div class="controls">
+											<input class="form-control input-small" style="width:90%" type="password" name="password" id="password" 
+												rows="1" ></input>
+										</div>
+									</div>
+								</div>
+
+								<p></p> <!--add some space-->
+
+								<div class="form-actions" style="overflow:hidden">
+									
+										<div style="overflow:hidden">
+											<button type="submit" value="Submit" class="btn btn-primary btn-lg submit" style="margin-left:40px; width:83%">Register</button>
+											<br>
+										</div>
+										<div style="margin-top:10px; margin-left:40px">
+											<a href="/" style="">Back to login</a>
+										</div>
+								</div> 
+						<!-- </fieldset> -->
+
+					</form>
+					
+				</div>
+				
+				
+
+			</div>
+		<div style="">
+					RPHub © by Henry Choi and Ravi Panse. An <a href="http://rcos.rpi.edu/"> RCOS </a> Project.
+				</div>
+	<!-- /.container -->
+	
+	<!-- footer -->
+	<!-- <div id="footer"></div> -->
+	
+	<!-- <div class="container">
+		<footer>
+			<div class="row">
+				<div class="col-lg-12">
+					RPHub © by Henry Choi and Ravi Panse. An <a href="http://rcos.rpi.edu/"> RCOS </a> Project.
+				</div>
+			</div>
+		</footer>
+	</div> -->
+	
+	
+	
+	
+	<!-- /footer -->
+	
+</body>
+
+</html>

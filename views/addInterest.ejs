@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	
+	<title>RPHub - Add Interests</title>
+	
+	<%- include imports.ejs %>	
+	
+	
+</head>
+
+<body>
+	
+	<!-- header -->
+	<%- include makeNavbar.ejs %>
+	
+	<!-- sidebar-->
+	<%- include makeSidebar.ejs %>
+	
+	
+	
+	<div id="meat"> <!-- entire body -->		
+		
+		<!-- <a href="request.html" id="reqbtn" class="btn btn-success" style="float: right">Request Something</a> -->
+		<form id="contact-form" action="/updateInterest" method="post" class="form-horizontal">
+			
+			<div class="submit-button">
+				<button type="submit" value="Submit" class="btn btn-primary btn-teal btn-lg submit" style="width:100%; margin-left:5px; margin-bottom:15px;">Save</button>
+			</div>
+			
+			<div id="cblist" data-columns>
+				<% 
+				var id = 0;
+				for (var i = 0; i < categories.length; i++) {
+				%>
+					<div class="list-group listofCheckboxes">
+						<a class="list-group-item active"><%=categories[i].name%></a>
+					<ul class="subItems">
+						<% for (var j = 0; j < categories[i].interests.length; j++) {%>
+							<li class="list-group-item interest">
+							<div class="interest"></div>
+								<input class="something" type="checkbox"  id="cb<%=id%>" name="checkbox[]" value="<%=categories[i].interests[j].noSpace%>"/> <label for="cb<%=id%>"><%=categories[i].interests[j].name%></label>
+							</li>
+						<% id++;} %>
+					</ul>
+					</div>
+				<%} %>
+			</div>
+			
+			<script>
+			$(document).ready(function(){
+			
+			$.get("/checkInterests", function(toCheck){
+				toCheck = $.parseJSON(toCheck);
+				console.log(toCheck);
+				for(var i=0; i<toCheck.length; i++){
+					//var element = toCheck[i].split(" ");
+					//var len = element.length;
+					$("input[value="+toCheck[i].noSpace+"]").prop("checked",true);
+				}
+			});
+			
+			$('.interest').on('click', function(c) {
+					//c.preventDefault();
+					c.stopPropagation();
+					if( c.target !== this ) {return;}
+					var checkbox = $(this).find('.something');
+					if(checkbox.is(":checked")){
+						checkbox.prop('checked', false);
+					}
+					
+					else{
+						checkbox.prop('checked', true);
+						//$(this).css('color', '000');
+					}
+					
+				});
+			});
+			/*
+			$( ".something" ).change(function() {
+				alert( "Handler for .change() called." );
+			});
+			*/
+			</script>
+			<!--
+			<input type="text" id="txtName" />
+			<input type="button" value="ok" id="btnSave" />
+			<script type="text/javascript">
+			$(document).ready(function() {
+				$('#btnSave').click(function() {
+					addCheckbox($('#txtName').val());
+				});
+			});
+
+			function addCheckbox(name) {
+			   var container = $('#cblist');
+			   var inputs = container.find('input');
+			   var id = inputs.length+1;
+
+			   $('<input />', { type: 'checkbox', id: 'cb'+id, value: name }).appendTo(container);
+			   $('<label />', { 'for': 'cb'+id, text: name }).appendTo(container);
+			}
+			</script>
+			-->
+		</form>
+		<!-- footer -->
+		<div>
+			RPHub © by Henry Choi and Ravi Panse. An <a href="http://rcos.rpi.edu/"> RCOS </a> Project.
+		</div>
+		<!-- <footer></footer> -->
+		
+		
+		
+	</div>	<!-- meat -->
+
+
+	
+	
+	<script src="/js/salvattore.js"></script>
+
+	
+</body>
+
+
+</html>
