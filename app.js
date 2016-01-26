@@ -11,16 +11,30 @@ var ejs = require("ejs");
 
 app.set('view engine', 'ejs');
 
-mongoose.connect('mongodb://heroku_2cmd106b:dor1kmi554bd0prrufd3l6qi2m@ds051615.mongolab.com:51615/heroku_2cmd106b'
-					  || process.env.MONGOLAB_URI 
-					  || process.env.MONGOHQ_URL 
-					  || 'mongodb://localhost/test');
+var uriString = process.env.MONGOLAB_URI 
+					 || process.env.MONGOHQ_URL 
+					 || 'mongodb://localhost/test');
+
+mongoose.connect(uriString, function(err, res){
+	if(err){
+		console.log('ERROR connecting to: ' + uriString + '. ' + err);
+	}
+	else{
+		console.log('Succeeded connected to: ' + uriString);
+	}
+};
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback(){
 
 });
+
+//Setup the server to listen on port 80 (Web traffic port), allow it to parse POSTED body data, and let it render EJS pages 
+server.listen(process.env.PORT || 80);
+app.use(bodyParser());
+
+app.use(express.static(__dirname));
 
 app.use(session({secret: 'monkey wizard'}));
 
@@ -98,14 +112,6 @@ var Category = mongoose.model('Category', categorySchema);
 
 var Interest = mongoose.model('Interest', interestSchema);
 //}
-
-//Setup the server to listen on port 80 (Web traffic port), allow it to parse POSTED body data, and let it render EJS pages 
-server.listen(process.env.PORT || 80);
-app.use(bodyParser());
-
-console.log('Server running at http://127.0.0.1:8080/');
-
-app.use(express.static(__dirname));
 
 
 //Find all categories and store them in a variable
