@@ -21,6 +21,7 @@ mongoose.connect(uriString, function(err, res){
 	}
 	else{
 		console.log('Succeeded connected to: ' + uriString);
+		server.listen(process.env.PORT || 80);
 	}
 });
 
@@ -32,7 +33,6 @@ db.once('open', function callback(){
 });
 
 //Setup the server to listen on port 80 (Web traffic port), allow it to parse POSTED body data, and let it render EJS pages 
-server.listen(process.env.PORT || 80);
 app.use(bodyParser());
 
 app.use(express.static(__dirname));
