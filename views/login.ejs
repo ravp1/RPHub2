@@ -46,15 +46,15 @@
 		<!-- /.container -->
 	</nav>
 	
+	<div id="logo-banner" style="margin-top:30px; margin-bottom:0px"> <p> RPHub </p> </div>
 	<!-- /header -->
 	
 	<div class="container">
 
 		<div class="row"> <!-- entire body -->
-			<img class="img-responsive" src="logo.svg" alt="" style="border:none; margin:0 auto"/>
-			<div id="main" class="col-lg-6" style="margin: 0 auto; margin-left:280px"> <!-- center part -->
+			<!--<div id="main" class="col-lg-6" style="margin: 0 auto; margin-left:280px"> <!-- center part -->
 				
-				
+			<div id="main" style="margin: 0 auto; left:25%; right:25%; width:50%">	
 				<br>
 				
 				<div class="well" style="margin-right: auto; margin-left:auto;">
@@ -65,7 +65,7 @@
 					
 					<form id="contact-form" action="/login" method="post" class="form-horizontal">
 						<!-- <fieldset> -->
-							<legend style = "text-align:center;">Welcome to RPHub!</legend>
+							<legend style = "text-align:center; font-weight:bold; font-size:220%; letter-spacing: -1px; margin-top:-10px">Find Projects That Matter to You.</legend>
 							<div id="error-message" style="background-color:#F6D2D2; border-radius:5px; border-style:solid; border-width:1px; border-color: red;">
 								<h4 style="margin-left:10px; margin-top:10px;padding-top: 10px;">Incorrect Email or Password</h4>
 								<p style="margin-left:10px">One of the fields has been entered incorrectly.</p>
@@ -113,26 +113,24 @@
 								<p></p> <!--add some space-->
 
 								<div class="form-actions" style="overflow:hidden;">
+								
 									<table style="width:100%;table-layout:fixed">
 									<tr>
-									<td style="width:80%;vertical-align:top;">
-									<button type="submit" value="Submit" class="btn btn-primary btn-lg submit" style="width:90%;">Login</button>
-									<!--<h3 style = "text-align:center; margin-left:165px; display:inline; position:relative">OR</h3>-->
+									<td style="width:70%;vertical-align:top;">
+									<button type="submit" value="Submit" class="btn btn-primary btn-lg submit" style="width:95%">Login</button>
 									</td>
-									<td style="vertical-align:top;">
-									<div style="float:right">
+									<td style="width:30%; vertical-align:top;">
+									<div style="float:right; width:100%">
 										<div style="overflow:hidden">
-											<a href="/register" class="btn btn-default btn-lg cancel" style="float:right">Register</a>
+											<a href="/register" class="btn btn-default btn-lg cancel" style="float:right; padding-right: 0px; padding-left: 0px; width:100%">Register</a>
 											<br>
 										</div>
-										
-										
-										
 									</div>
 									
 									</td>
 									</tr>
 									</table>
+									
 									<div style="margin-top:10px; float:right ">
 											<a href="#som" style="">Forgot your password?</a>
 										</div>

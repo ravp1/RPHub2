@@ -8,6 +8,39 @@ body {
 	min-width: 690px;
 }
 
+/* LOGO */
+@font-face {
+	font-family: 'Zantroke';
+	src: url(/fonts/Zantroke.otf);
+}
+
+#logo-banner {
+	background-color: #428bca;
+	width: 100%;
+	height: 100px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	position: relative;
+	/*format text*/
+	font-family: Zantroke;
+	/*
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	*/
+	color: white;
+	font-size: 750%
+}
+
+#logo-banner p{
+	margin: 0;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   margin-right: -50%;
+   transform: translate(-50%, -50%)
+}
+
 
 /***HEADER***/
 #navbar {

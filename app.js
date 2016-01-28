@@ -137,17 +137,52 @@ Category.find({},function(err,data){
 	app.get('/register', function(req, res){
 		res.render('register',{user:req.session.user});
 	});
-//}
-
-
-//{ APP.GET(ACTION)
-
+	
 	app.get('/addInterest', function(req, res){
 		if (req.session.user == null){
 			res.redirect('/');
 		}
 		else{
 			res.render('addInterest',{user:req.session.user});
+		}
+	});
+	
+	app.get('/interests/:intName', function(req, res) {
+		if (req.session.user == null){
+			res.redirect('/');
+		}
+		else{
+			if (!req.params.intName){
+				res.end();
+				return;
+			}
+			var intName = req.params.intName;
+			//console.log("the url for this request is" + req.url);
+			//console.log("the path for this request is" + req.path);
+			Interest.findOne({nickname:intName},function(err,interest){
+				if (interest == null){
+					res.end();
+					return;
+				}
+				Post.find({tags:interest.name}, function(err, relevantPosts){
+					if(err) return console.error(err);
+					res.render('interests', { interest: interest, posts: relevantPosts, user:req.session.user });
+				});
+			});
+		}
+	});
+//}
+
+
+//{ APP.GET(ACTION)
+	app.get('/amILoggedIn', function(req, res){
+		if(req.session.user){
+			res.end("yes");
+			return;
+		}
+		else{
+			res.end("no");
+			return;
 		}
 	});
 
@@ -161,6 +196,15 @@ Category.find({},function(err,data){
 	app.get("/checkInterests",function(req,res){
 		res.write(JSON.stringify(req.session.user.interests) );
 		res.end();
+	});
+	
+	app.get('/request', function(req, res){
+		if (req.session.user == null){
+			res.redirect('/');
+		}
+		else{
+			res.render('request',{user:req.session.user});
+		}
 	});
 
 	app.get("/logoff",function(req,res){
@@ -255,6 +299,68 @@ Category.find({},function(err,data){
 			}
 		});
 	});
+	
+	//{ POST REQUEST TO FEED
+	var parseCompensation = function(compen, payAmount, credAmount){
+		var compensations = [[false, 0], [false, 0]];
+		if (compen == "both" || compen =="cash"){
+			compensations[0] = [true, payAmount];
+		}
+		if(compen =="both" || compen=="cred"){
+			compensations[1] = [true, credAmount];
+		}
+		return compensations;
+	}
+
+	app.post("/sendMessage",function(req,res){
+
+		subject = req.body.subject;
+		message = req.body.message;
+		//var tags = findTags(message);
+		console.log(req.body.tags);
+		var tags = req.body.tags.split("; ");
+		tags.pop();
+		var comp = parseCompensation(req.body.compen, req.body.payAmount, req.body.credAmount);
+		if (parseInt(req.body.hrwk) != NaN){
+			var hrwk = req.body.hrwk;
+		}
+		else{
+			var hrwk = 0;
+		}
+		var years = req.body.year;
+		var date = new Date();
+		var timeS = date.toDateString();
+		var currentUser = req.session.user.name.first + " " + req.session.user.name.last;
+		var sentEmail = req.session.user.email;
+		if (subject == null || message == null)
+		{
+			res.redirect("/request");
+			return;
+		}
+		var post = new Post({content:message, title:subject, fulfilled:false, timePosted: date, poster:currentUser, timeString:timeS, replyAddress:sentEmail, tags:[], commitment: hrwk, years: years, pay:comp[0], credit:comp[1]});
+		for (var i =0; i< tags.length; i++){
+			/*
+			Interest.findOne({$or : [{noSpace: tags[i]}, {nickname: tags[i]}]},function(err,result){
+				if (result != null){
+					post.tags.push(result.name);
+					post.save();
+				}
+			});
+			*/
+			Interest.findOne({name:tags[i]},function(err,result){
+				if (result != null){
+					post.tags.push(result.name);
+					post.save();
+				}
+			});
+		}
+		post.save();
+		res.redirect("/");
+		//res.end();
+
+	});
+	
+	//}
 
 //}
 
