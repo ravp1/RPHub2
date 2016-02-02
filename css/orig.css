@@ -297,6 +297,10 @@ footer {
 
 #reqbtn{
 	float:right;
+	font-family: sans-serif;
+	position: absolute;
+	top: 52px;
+	right: 13px;
 }
 
 
