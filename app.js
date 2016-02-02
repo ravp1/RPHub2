@@ -118,15 +118,7 @@ var Interest = mongoose.model('Interest', interestSchema);
 
 
 
-
-
-
-
-
-
-
-
-
+/*
 
 // CREATE DEFAULT CATEGORIES, INETERESTS, POSTS (ALREADY CREATED; NO NEED TO RUN EVERY TIME)
 //{ SETUP ENGINEERING CATEGORY
@@ -263,16 +255,7 @@ Interest.findOne({name: "Electrical Engineering"},function(err,result){
 	result.returnPosts()
 });
 
-
-
-
-
-
-
-
-
-
-
+*/
 
 
 
