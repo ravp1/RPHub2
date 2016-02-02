@@ -450,6 +450,28 @@ Category.find({},function(err,data){
 		});
 	});
 	
+	app.post("/updateInterest", function(req, res){
+		//checkbox = req.body.checkbox;
+		var checkbox = req.body.checkbox;
+		if(checkbox){
+			req.session.user.interests = [];
+			for (var i =0; i< checkbox.length; i++){
+				Interest.findOne({noSpace: checkbox[i]},function(err,result){
+					req.session.user.interests.push(result);
+					//req.session.user.interests.save();
+					//req.session.user.save();
+					if(req.session.user.interests.length == checkbox.length){
+						res.redirect("/addInterest");
+					}
+				});
+			}	
+		}
+		else{
+			req.session.user.interests=[];
+			res.redirect("/addInterest");
+		}
+	});
+	
 	//{ POST REQUEST TO FEED
 	var parseCompensation = function(compen, payAmount, credAmount){
 		var compensations = [[false, 0], [false, 0]];
