@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	
+	<title>RPHub - Request</title>
+	
+	<%- include imports.ejs %>
+	
+	<link href="/views/request.css" rel="stylesheet">
+	
+	
+</head>
+
+<body>
+	
+	<!-- header -->
+	<%- include makeNavbar.ejs %>
+	
+	<!--sidebar-->
+	<%- include makeSidebar.ejs %>
+	
+
+	<div id="meat"> <!-- entire body -->
+
+		<form id="request-form" style="max-width: 1050px;" action="/sendMessage" method="post" class="form-horizontal well">
+			
+			<legend>Request Form</legend>
+			
+			<div class="control-group">
+				<label class="control-label" for="subject">Subject</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" name="subject" id="subject">
+				</div>
+			</div>
+			
+			<div class="control-group" style="">
+				<label class="control-label" for="tags">Tag Interests: </label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" name="tags" id="tags">
+				</div>
+			</div>
+			<!--
+			<table style="width:100%">
+				<tr>
+					<td style="width:25%">
+						<label class="control-label" for="">Compensation Type</label>
+						<div>
+							<input type="radio" name="compen" value="cred">
+							<span>Credits</span>
+							
+							<input type="radio" name="compen" value="cash">
+							<span>Cash</span>
+							
+							<input type="radio" name="compen" value="both">
+							<span>Both</span>
+						<div>
+					</td>
+					<td style="width:33%">
+						<label class="control-label" for="">Amount</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" name="firstName" id="firstName">
+						</div>
+					</td>
+					<td style="width:33%">
+						<label class="control-label" for="">Hr/Wk</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" name="hrwk" id="hrwk">
+						</div>
+					</td>
+				</tr>
+			</table>
+			-->
+			<div style="display:inline-block; padding-right:18px;">
+				<label class="control-label" for="">Compensation Type</label>
+				<div>
+					
+					<input type="radio" name="compen" value="cash">
+					<span>Cash</span>
+					
+					<input type="radio" name="compen" value="cred">
+					<span>Credits</span>
+					
+					<input type="radio" name="compen" value="both">
+					<span>Both</span>
+				</div>
+			</div>
+			
+			<div style="display:inline-block; padding-right:15px; width:14%">
+				<label class="control-label" for="">Pay (Hourly)</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" name="payAmount" id="payAmount">
+				</div>
+			</div>
+			
+			<div style="display:inline-block; padding-right:30px; width:15%">
+				<label class="control-label" for="">Credits/Semester</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" name="credAmount" id="credAmount">
+				</div>
+			</div>
+			
+			<div style="display:inline-block; padding-right:30px; width:15%">
+				<label class="control-label" for="">Hours/Week</label>
+				<div class="controls">
+					<input type="text" class="input-xlarge" name="hrwk" id="hrwk">
+				</div>
+			</div>
+			
+			<div style="display:inline-block; padding-right:18px;">
+				<label class="control-label" for="">Looking For</label>
+				<div>
+					<input type="checkbox" name="year[]" value="freshmen" id="freshmen">
+					<span>Freshmen</span>
+					
+					<input type="checkbox" name="year[]" value="sophomores" id="sophomores">
+					<span>Sophomores</span>
+					
+					<input type="checkbox" name="year[]" value="juniors" id="juniors">
+					<span>Juniors</span>
+					
+					<input type="checkbox" name="year[]" value="seniors" id="seniors">
+					<span>Seniors</span>
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="message">Request</label>			
+				<textarea class="input-xlarge" name="message" id="message" 
+					rows="5" ></textarea>
+			</div>
+			
+			<div class="form-actions">
+				<button type="submit" value="Submit" class="btn btn-primary btn-large submit">Submit</button>
+			</div>
+		</form>
+		
+		
+		<footer>
+			RPHub © by Henry Choi and Ravi Panse. An <a href="http://rcos.rpi.edu/"> RCOS </a> Project.
+		</footer>		
+		
+		
+	</div>
+	
+
+</body>
+
+<script>
+$(document).ready(function() {
+	$.get("/interests",function(interests){
+		var availableTags = [];
+		interests = $.parseJSON(interests);
+		for(var i=0; i<interests.length; i++)
+		{
+			availableTags.push(interests[i].name);
+		}
+		
+		function split( val ) {
+		  return val.split( /;\s*/ );
+		}
+		function extractLast( term ) {
+		  return split( term ).pop();
+		}
+
+		$( "#tags" )
+		  // don't navigate away from the field on tab when selecting an item
+		  .bind( "keydown", function( event ) {
+			if ( event.keyCode === $.ui.keyCode.TAB &&
+				$( this ).autocomplete( "instance" ).menu.active ) {
+			  event.preventDefault();
+			}
+		  })
+		  .autocomplete({
+			minLength: 0,
+			source: function( request, response ) {
+			  // delegate back to autocomplete, but extract the last term
+			  response( $.ui.autocomplete.filter(
+				availableTags, extractLast( request.term ) ) );
+			},
+			focus: function() {
+			  // prevent value inserted on focus
+			  return false;
+			},
+			select: function( event, ui ) {
+			  var terms = split( this.value );
+			  // remove the current input
+			  terms.pop();
+			  // add the selected item
+			  terms.push( ui.item.value );
+			  // add placeholder to get the comma-and-space at the end
+			  terms.push( "" );
+			  this.value = terms.join( "; " );
+			  return false;
+			}
+		});
+	});
+});
+</script>
+
+
+</html>

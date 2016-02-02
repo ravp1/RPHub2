@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head id="include">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	<title>RPHub</title>
+	
+	<%- include imports.ejs %>
+	
+	<!--
+	<script>
+		$(function() {
+		var availableTags = [
+		  "ActionScript",
+		  "AppleScript",
+		  "Asp",
+		  "BASIC",
+		  "C",
+		  "C++",
+		  "Clojure",
+		  "COBOL",
+		  "ColdFusion",
+		  "Erlang",
+		  "Fortran",
+		  "Groovy",
+		  "Haskell",
+		  "Java",
+		  "JavaScript",
+		  "Lisp",
+		  "Perl",
+		  "PHP",
+		  "Python",
+		  "Ruby",
+		  "Scala",
+		  "Scheme"
+		];
+		function split( val ) {
+		  return val.split( /,\s*/ );
+		}
+		function extractLast( term ) {
+		  return split( term ).pop();
+		}
+
+		$( "#tags" )
+		  // don't navigate away from the field on tab when selecting an item
+		  .bind( "keydown", function( event ) {
+			if ( event.keyCode === $.ui.keyCode.TAB &&
+				$( this ).autocomplete( "instance" ).menu.active ) {
+			  event.preventDefault();
+			}
+		  })
+		  .autocomplete({
+			minLength: 0,
+			source: function( request, response ) {
+			  // delegate back to autocomplete, but extract the last term
+			  response( $.ui.autocomplete.filter(
+				availableTags, extractLast( request.term ) ) );
+			},
+			focus: function() {
+			  // prevent value inserted on focus
+			  return false;
+			},
+			select: function( event, ui ) {
+			  var terms = split( this.value );
+			  // remove the current input
+			  terms.pop();
+			  // add the selected item
+			  terms.push( ui.item.value );
+			  // add placeholder to get the comma-and-space at the end
+			  terms.push( "" );
+			  this.value = terms.join( ", " );
+			  return false;
+			}
+		  });
+		});
+	</script>
+	-->
+	
+	
+	
+</head>
+
+<body>
+
+	<!-- header -->
+	<%- include makeNavbar.ejs %>
+	
+	<!--sidebar-->
+	<%- include makeSidebar.ejs %>
+	
+	
+	<div id="meat"> <!-- entire body -->
+		
+		<br>
+		
+		<div class="" id="interest-heading">
+			<p class="h1" style="font-size: 60px; text-align: center"> <%= interest.name %> </p>
+			
+			<span >
+				<a href="#mech" class="btn btn-default"> Mechanical </a>
+				<a href="#aero" class="btn btn-default"> Aerospace </a>
+				<a href="#nuke" class="btn btn-default"> Nuclear </a>
+				<a href="#biot" class="btn btn-default"> Biotech </a>
+				<a href="#interests" class="btn btn-default"> See more &raquo </a>
+			</span>
+			
+		</div>
+		
+		
+		<div class="posts" id="listofPosts" data-columns> <!-- listofPosts -->
+			
+			<% for(var i=posts.length-1; i>=0; i--) {%>
+			<div class="list-group-item collapse-group">
+				<fieldset>
+					<legend>
+						<%=posts[i].title%>
+						<small>- <%=posts[i].poster%> </small>
+						
+						<small style="float: right"> <%=posts[i].timeString%> </small>
+					</legend>
+					<!-- show tags-->
+					<p style="display:inline; padding:0 0 0 0">tagged with: <% for(var j=0; j<posts[i].tags.length; j++) {%> 
+						<div style="font-weight: 700; white-space:nowrap; display:inline"><%=posts[i].tags[j]%></div><% if(j<posts[i].tags.length-1) {%>;<%}%>
+						<%}%>
+					</p>
+					<!-- show tags-->
+					
+					<!--show commitment-->
+					<p style="font-weight: 700; padding:0 0 0 0; margin-top:-10px"><%=posts[i].commitment %> hours per week</p>
+					<!--show commitment-->
+					
+					<% if(posts[i].pay[0]) {%>
+						<p style="font-weight: 700; padding:0 0 0 0; margin-top:-10px"> Pay at a rate of $<%=posts[i].pay[1] %> per hour</p>
+					<%}%>
+
+					<% if(posts[i].credit[0]) {%>
+						<p style="font-weight: 700; padding:0 0 0 0; margin-top:-10px"><% if(posts[i].pay[0]) {%>or <%}%> <%=posts[i].credit[1] %> credits offered </p>
+					<%}%>
+					<br>
+					
+					<p style="white-space: pre-line"> <%=posts[i].content%></p>
+					<div style="text-align:center"> <button class="btn btn-default btn-teal btn-respond" align="center"> Respond <span class="caret"></span> </button> </div>
+					
+					<form class="collapse" action="mailto:panser@rpi.edu" method="post" enctype="text/plain" >
+						<br>
+						Send a message to <b><%=posts[i].replyAddress%></b>
+						<textarea class="input-xlarge" name="message" id="message" rows="5"></textarea>
+						
+						<br>
+						
+						<div class="form-actions">
+							<button type="submit" name="submit" value="Submit" class="btn btn-primary btn-large">Submit</button>
+							<button class="btn btn-default collapse-button">Collapse</button>
+						</div>
+					</form>
+				
+				</fieldset>
+			</div>
+			<% } %>
+			
+			
+			<!-- database stuff goes here -->
+			
+		</div>
+			
+			<!-- <div class="text-right">
+				<a class="btn btn-success">Request Something</a>
+			</div> -->
+			<!--
+			<li class="list-group-item collapse-group">
+				<fieldset>
+					
+					<legend>
+						<span class="glyphicon glyphicon-remove" style="color: grey"></span>
+						Title
+						<small>- Poster</small>
+						<small style="float: right">Date</small>
+					</legend>
+					
+					<label class="control-label" for="subject">not done yet--I have a request about something</label>
+					<p>This is what i need content content content content  lorem ipsum shi</p>
+					<div style="text-align:center"> <button class="btn btn-teal btn-respond" align="center"> Respond <span class="caret"></span> </button> </div>
+					
+					<div class="collapse">
+						<br>
+						Send a message to <a href="mailto:professor@rpi.edu?Subject=NAMEOFPROJECT">professor@rpi.edu</a>:
+						<br>
+						<textarea class="input-xlarge" name="message" id="message" rows="5" ></textarea>
+						
+						<br>
+						
+						<div class="form-actions">
+							<button type="submit" class="btn btn-primary btn-large">Submit</button>
+							<button class="btn btn-default collapse-button">Collapse</button>
+						</div>
+					</div>
+				
+				</fieldset>
+			</li>
+			-->
+		
+		<footer>
+			RPHub © by Henry Choi and Ravi Panse. An <a href="http://rcos.rpi.edu/"> RCOS </a> Project.
+		</footer>
+		
+	</div> <!-- /meat -->
+	
+	
+	<script>
+	$(document).ready(function(){
+		$('.collapse-group').on('click', function(c) {
+			c.preventDefault();
+			var collapse = $(this).find('.collapse');
+			collapse.show();
+		});
+		
+		$('.collapse-button').on('click', function(e) {
+			//alert('clicked');
+			e.preventDefault();
+			var collapse = $(this).closest('.collapse');
+			console.log(collapse.html())
+			collapse.hide();
+			console.log(collapse.css("display"));
+			e.stopPropagation();
+		});
+	});
+	
+	</script>
+	
+	<script src="/js/salvattore.js"></script>
+	
+	
+	
+</body>
+
+</html>
