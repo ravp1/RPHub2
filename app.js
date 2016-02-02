@@ -285,7 +285,7 @@ Category.find({},function(err,data){
 	});
 
 	app.get('/register', function(req, res){
-		res.render('register',{user:req.session.user});
+		res.render('/register',{user:req.session.user});
 	});
 	
 	app.get('/addInterest', function(req, res){
